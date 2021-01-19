@@ -39,7 +39,7 @@ resource "aws_vpc" "this" {
 
   tags = merge(
     {
-      "Name" = format("%s", var.name)
+      "Name" = format("%s-vpc", var.name)
     },
     var.tags,
     var.vpc_tags,
@@ -139,7 +139,7 @@ resource "aws_internet_gateway" "this" {
 
   tags = merge(
     {
-      "Name" = format("%s", var.name)
+      "Name" = format("%s-igw", var.name)
     },
     var.tags,
     var.igw_tags,
@@ -170,7 +170,7 @@ resource "aws_route_table" "public" {
 
   tags = merge(
     {
-      "Name" = format("%s-${var.public_subnet_suffix}", var.name)
+      "Name" = format("%s-rtb-${var.public_subnet_suffix}", var.name)
     },
     var.tags,
     var.public_route_table_tags,
@@ -208,8 +208,8 @@ resource "aws_route_table" "private" {
 
   tags = merge(
     {
-      "Name" = var.single_nat_gateway ? "${var.name}-${var.private_subnet_suffix}" : format(
-        "%s-${var.private_subnet_suffix}-%s",
+      "Name" = var.single_nat_gateway ? "${var.name}-rtb-${var.private_subnet_suffix}" : format(
+        "%s-rtb-${var.private_subnet_suffix}-%s",
         var.name,
         element(var.azs, count.index),
       )
@@ -341,7 +341,7 @@ resource "aws_subnet" "public" {
   tags = merge(
     {
       "Name" = format(
-        "%s-${var.public_subnet_suffix}-%s",
+        "%s-subnet-${var.public_subnet_suffix}-%s",
         var.name,
         element(var.azs, count.index),
       )
@@ -368,7 +368,7 @@ resource "aws_subnet" "private" {
   tags = merge(
     {
       "Name" = format(
-        "%s-${var.private_subnet_suffix}-%s",
+        "%s-subnet-${var.private_subnet_suffix}-%s",
         var.name,
         element(var.azs, count.index),
       )
@@ -604,7 +604,7 @@ resource "aws_network_acl" "public" {
 
   tags = merge(
     {
-      "Name" = format("%s-${var.public_subnet_suffix}", var.name)
+      "Name" = format("%s-nacl-${var.public_subnet_suffix}", var.name)
     },
     var.tags,
     var.public_acl_tags,
@@ -656,7 +656,7 @@ resource "aws_network_acl" "private" {
 
   tags = merge(
     {
-      "Name" = format("%s-${var.private_subnet_suffix}", var.name)
+      "Name" = format("%s-nacl-${var.private_subnet_suffix}", var.name)
     },
     var.tags,
     var.private_acl_tags,
@@ -931,7 +931,7 @@ resource "aws_eip" "nat" {
   tags = merge(
     {
       "Name" = format(
-        "%s-%s",
+        "%s-eip-ngw-%s",
         var.name,
         element(var.azs, var.single_nat_gateway ? 0 : count.index),
       )
@@ -956,7 +956,7 @@ resource "aws_nat_gateway" "this" {
   tags = merge(
     {
       "Name" = format(
-        "%s-%s",
+        "%s-ngw-%s",
         var.name,
         element(var.azs, var.single_nat_gateway ? 0 : count.index),
       )
