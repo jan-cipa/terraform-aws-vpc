@@ -368,52 +368,52 @@ output "vgw_arn" {
 }
 
 output "default_vpc_id" {
-  description = "The ID of the VPC"
+  description = "The ID of the Default VPC"
   value       = concat(aws_default_vpc.this.*.id, [""])[0]
 }
 
 output "default_vpc_arn" {
-  description = "The ARN of the VPC"
+  description = "The ARN of the Default VPC"
   value       = concat(aws_default_vpc.this.*.arn, [""])[0]
 }
 
 output "default_vpc_cidr_block" {
-  description = "The CIDR block of the VPC"
+  description = "The CIDR block of the Default VPC"
   value       = concat(aws_default_vpc.this.*.cidr_block, [""])[0]
 }
 
 output "default_vpc_default_security_group_id" {
-  description = "The ID of the security group created by default on VPC creation"
+  description = "The ID of the security group created by default on Default VPC creation"
   value       = concat(aws_default_vpc.this.*.default_security_group_id, [""])[0]
 }
 
 output "default_vpc_default_network_acl_id" {
-  description = "The ID of the default network ACL"
+  description = "The ID of the default network ACL of the Default VPC"
   value       = concat(aws_default_vpc.this.*.default_network_acl_id, [""])[0]
 }
 
 output "default_vpc_default_route_table_id" {
-  description = "The ID of the default route table"
+  description = "The ID of the default route table of the Default VPC"
   value       = concat(aws_default_vpc.this.*.default_route_table_id, [""])[0]
 }
 
 output "default_vpc_instance_tenancy" {
-  description = "Tenancy of instances spin up within VPC"
+  description = "Tenancy of instances spin up within Default VPC"
   value       = concat(aws_default_vpc.this.*.instance_tenancy, [""])[0]
 }
 
 output "default_vpc_enable_dns_support" {
-  description = "Whether or not the VPC has DNS support"
+  description = "Whether or not the Default VPC has DNS support"
   value       = concat(aws_default_vpc.this.*.enable_dns_support, [""])[0]
 }
 
 output "default_vpc_enable_dns_hostnames" {
-  description = "Whether or not the VPC has DNS hostname support"
+  description = "Whether or not the Default VPC has DNS hostname support"
   value       = concat(aws_default_vpc.this.*.enable_dns_hostnames, [""])[0]
 }
 
 output "default_vpc_main_route_table_id" {
-  description = "The ID of the main route table associated with this VPC"
+  description = "The ID of the main route table associated with the Default VPC"
   value       = concat(aws_default_vpc.this.*.main_route_table_id, [""])[0]
 }
 
@@ -1405,6 +1405,36 @@ output "vpc_endpoint_codeartifact_repositories_network_interface_ids" {
 output "vpc_endpoint_codeartifact_repositories_dns_entry" {
   description = "The DNS entries for the VPC Endpoint for Codeartifact repositories."
   value       = flatten(aws_vpc_endpoint.codeartifact_repositories.*.dns_entry)
+}
+
+output "vpc_endpoint_dms_id" {
+  description = "The ID of VPC endpoint for DMS"
+  value       = concat(aws_vpc_endpoint.sns.*.id, [""])[0]
+}
+
+output "vpc_endpoint_dms_network_interface_ids" {
+  description = "One or more network interfaces for the VPC Endpoint for DMS."
+  value       = flatten(aws_vpc_endpoint.sns.*.network_interface_ids)
+}
+
+output "vpc_endpoint_dms_dns_entry" {
+  description = "The DNS entries for the VPC Endpoint for DMS."
+  value       = flatten(aws_vpc_endpoint.sns.*.dns_entry)
+}
+
+output "vpc_endpoint_rds_id" {
+  description = "The ID of VPC endpoint for RDS"
+  value       = concat(aws_vpc_endpoint.rds.*.id, [""])[0]
+}
+
+output "vpc_endpoint_rds_network_interface_ids" {
+  description = "One or more network interfaces for the VPC Endpoint for RDS."
+  value       = flatten(aws_vpc_endpoint.rds.*.network_interface_ids)
+}
+
+output "vpc_endpoint_rds_dns_entry" {
+  description = "The DNS entries for the VPC Endpoint for RDS."
+  value       = flatten(aws_vpc_endpoint.rds.*.dns_entry)
 }
 
 # VPC flow log
